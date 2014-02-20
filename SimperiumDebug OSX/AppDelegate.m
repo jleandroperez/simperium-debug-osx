@@ -10,6 +10,10 @@
 #import "SDTestWindowController.h"
 
 
+NSString* const kAppId	= @"donor-date-4b8";
+NSString* const kAPIKey	= @"7b5e3fc0763f4287b22cf1a872942651";
+
+
 @interface AppDelegate ()
 @property (readwrite, strong, nonatomic) Simperium						*simperium;
 @property (readwrite, strong, nonatomic) NSPersistentStoreCoordinator	*persistentStoreCoordinator;
@@ -22,14 +26,10 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-	self.simperium = [[Simperium alloc] initWithWindow:self.testWindowController.window];
-	
-//	self.simperium.verboseLoggingEnabled = YES;
-    [self.simperium startWithAppID:@"impulse-purposes-708"
-							APIKey:@"4968fb3b4fb94fd48db88e477cca0a32"
-							 model:self.managedObjectModel
-						   context:self.managedObjectContext
-					   coordinator:self.persistentStoreCoordinator];
+	self.simperium = [[Simperium alloc] initWithModel:self.managedObjectModel context:self.managedObjectContext coordinator:self.persistentStoreCoordinator];
+				
+//	self.simperium.verboseLoggingEnabled = YES;]
+	[self.simperium authenticateWithAppID:kAppId APIKey:kAPIKey window:self.testWindowController.window];
 }
 
 + (AppDelegate*)delegate
